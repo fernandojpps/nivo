@@ -14,6 +14,7 @@ import { ChoroplethPropTypes, ChoroplethDefaultProps } from './props'
 import GeoGraticule from './GeoGraticule'
 import GeoMapFeature from './GeoMapFeature'
 import { useGeoMap, useChoropleth } from './hooks'
+import ChoroplethTooltip from './ChoroplethTooltip'
 
 const Choropleth = memo(props => {
     const {
@@ -42,11 +43,12 @@ const Choropleth = memo(props => {
         legends,
         isInteractive,
         onClick,
-        tooltip: Tooltip,
+        tooltip,
         role,
         defs,
         fill,
     } = { ...ChoroplethDefaultProps, ...props }
+    const Tooltip = tooltip ?? ChoroplethTooltip
 
     const { margin, outerWidth, outerHeight } = useDimensions(width, height, partialMargin)
     const { graticule, path, getBorderWidth, getBorderColor } = useGeoMap({
@@ -56,8 +58,7 @@ const Choropleth = memo(props => {
         projectionScale,
         projectionTranslation,
         projectionRotation,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        fillColor: () => {},
+        fillColor: () => { },
         borderWidth,
         borderColor,
     })
